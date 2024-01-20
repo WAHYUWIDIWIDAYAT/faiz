@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Sales\SalesController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,6 +81,19 @@ Route::prefix('supervisor')->middleware('is_admin')->group(function(){
     //edit
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::put('/customer/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
+
+    Route::get('/product', [ProductController::class, 'index'])->name('product');
+    //store
+    Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+    //edit
+    Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
+    //detail
+    Route::get('/product/detail/{id}', [ProductController::class, 'show'])->name('product.detail');
+    //delete
+    Route::delete('/product/delete/{id}', [ProductController::class, 'destroy'])->name('product.delete');
+    
 
 }); 
 
