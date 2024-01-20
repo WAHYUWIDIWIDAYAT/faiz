@@ -72,6 +72,30 @@
           </li>
         </ul>
       </li>
+     
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Pembelian</span></li>
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-user"></i>
+          <div data-i18n="Authentications">Pembelian</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{{route('purchase_order')}}" class="menu-link">  
+              <div data-i18n="Basic">Pembelian Produk</div>
+            </a>
+          </li>
+    
+        </ul>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{{route('list_order')}}" class="menu-link">  
+              <div data-i18n="Basic">List Pembelian</div>
+            </a>
+          </li>
+         
+        </ul>
+      </li>
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Sales</span></li>
     <!-- Forms -->
     <li class="menu-item">

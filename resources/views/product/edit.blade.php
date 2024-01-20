@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Tambah Task</title>
+    <title>Edit Task</title>
     
 @endsection
 
@@ -34,12 +34,13 @@
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product /</span> Tambah</h4>
-    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
     <div class="row">
         <div class="col-md-6">
         <div class="card mb-4">
-            <h5 class="card-header">Tambah Produk</h5>
+            <h5 class="card-header">Edit Produk</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <div class="mb-3">
                 <label class="form-label" for="basic-default-name">Name Produk</label>
@@ -49,6 +50,7 @@
                     id="name"
                     name="name"
                     placeholder="Enter Nama Product"
+                    value="{{ $product->name }}"
                 />
                 <p class="text-danger">{{ $errors->first('name') }}</p>
                 </div>
@@ -60,7 +62,7 @@
                     name="description"
                     placeholder="Enter Description Task"
                     required
-                ></textarea>
+                >{{ $product->description }}</textarea>
                 <p class="text-danger">{{ $errors->first('description') }}</p>
                 </div>
             </div>
@@ -81,6 +83,7 @@
         class="form-control"
         id="stock"
         name="stock"
+        value="{{ $product->stock }}"
         placeholder="Enter Stock"
         required
     />
@@ -92,6 +95,7 @@
         type="number"
         class="form-control"
         id="price"
+        value="{{ $product->price }}"
         name="price"
         placeholder="Enter Price"
         required
@@ -103,12 +107,16 @@
     <input
         type="file"
         class="form-control"
-        id="image"
+        id="file-input"
         name="image"
         placeholder="Enter Image"
         required
     />
+    <br>
+    <img id="preview-image" src="{{ asset('storage/images/'.$product->image) }}" alt="preview image" width="185" height="185">
 </div>
+
+
 
     <input type="hidden" name="assign_from" value="{{ Auth::user()->id }}">
         </div>

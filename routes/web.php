@@ -10,6 +10,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Sales\SalesController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\VoucherController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -93,7 +95,19 @@ Route::prefix('supervisor')->middleware('is_admin')->group(function(){
     Route::get('/product/detail/{id}', [ProductController::class, 'show'])->name('product.detail');
     //delete
     Route::delete('/product/delete/{id}', [ProductController::class, 'destroy'])->name('product.delete');
-    
+
+    Route::get('/purchase_order', [PurchaseOrderController::class, 'index'])->name('purchase_order');
+    Route::get('/select_product', [PurchaseOrderController::class, 'select_product'])->name('select_product');
+
+    Route::post('/checkout', [PurchaseOrderController::class, 'checkout'])->name('checkout');
+    Route::get('/list_purchase_order', [PurchaseOrderController::class, 'list_order'])->name('list_order');
+    //detail_order
+    Route::get('/detail_order/{id}', [PurchaseOrderController::class, 'detail_order'])->name('detail_order');
+    //checkVoucher
+    Route::post('/checkVoucher', [VoucherController::class, 'checkVoucher'])->name('checkVoucher');
+    //invoice
+    Route::get('/invoice/{id}', [PurchaseOrderController::class, 'invoice'])->name('invoice');
+
 
 }); 
 

@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>List Product</title>
+    <title>List Pembelian</title>
 @endsection
 
 @section('content')
 <main class="main">
 <br><br>
     <div class="container-fluid">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product \</span> List</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Pembelian \</span> List</h4>
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-12">
@@ -21,13 +21,10 @@
                             @if (session('error'))
                                 <div class="alert alert-danger">{{ session('error') }}</div>
                             @endif
-                            
-                            <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm float-right">Tambah</a>
-
-                           
+                        
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('product') }}" method="get">
+                            <form action="#" method="get">
                                 <div class="input-group mb-3 col-md-3 float-right">
                                     <input type="text" name="q" class="form-control rounded mr-2" placeholder="Cari..." value="{{ request()->q }}" style="margin-right: 20px;">
                                     <div class="input-group-append">
@@ -40,54 +37,43 @@
                                     <thead>
                                     <tr style="border-bottom: 2px solid #e3e3e3; padding: 10px;">
                                            
-                                            <th>Nama Produk</th>
-                                            <th>Stok</th>
-                                            <th>Harga</th>
-                                            <th>Deksripsi</th>
+                                            <th>Nama Customer</th>
+                                            <th>Tanggal</th>
+                                          
+                                
+                                            <th>Sales Name</th>
+                                            <th>Alamat</th>
+                                            <th>Nomor Telepon</th>
+                                            <th>Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                                        
                                         <tr style="border-bottom: 2px solid #e3e3e3; padding: 10px;">
-                                        @forelse ($products as $product)
+                                        @forelse ($purchaseOrders as $order)
                                             <td>
-                                                <strong>{{ $product->name }}</strong>
+                                                <strong>{{ $order->customer->name }}</strong><br>
                                                 
                                             </td>
                                             <td>
-                                                {{ $product->stock }}
+                                                {{ $order->created_at->format('d-m-Y') }}
                                             </td>
                                            
+                                            <td>{{ $order->user->name }}</td>
+                                            <td>{{ $order->address }}</td>
+                                            <td>{{ $order->phone }}</td>
+                                            <td>{{ $order->email }}</td>
                                             <td>
-                                                Rp. {{ number_format($product->price) }}
-                                            </td>
-                                            </td>
-                                            <td>
-                                                <!-- {{ $product->description }} with !! -->
-                                                {!! $product->description !!}
-                                            </td>
-                                          
-                                            <td>
-                                                  
+                                            
                                                     <div class="btn-group">
-                                                    <form action="">
-                                                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary btn-sm">
+                                                    <a href="#" class="btn btn-primary btn-sm">
                                                         Edit
                                                     </a>
-                                                    </form>
                                                     &nbsp;
-                                                    <form action="">
-                                                    <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ route('detail_order', $order->id) }}" class="btn btn-primary btn-sm">
                                                         Show
                                                     </a>
-                                                    </form>
-                                                    &nbsp;
-                                                    <form action="{{ route('product.delete', $product->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <a href="{{ route('product.delete', $product->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Delete</a>
-                                                    </form>
                                                     </div>
                                                     
                                             </td>

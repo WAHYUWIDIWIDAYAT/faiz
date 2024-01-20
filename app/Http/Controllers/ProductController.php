@@ -10,10 +10,10 @@ use illuminate\Support\Facades\Auth;
 use illuminate\Support\Facades\Hash;
 use illuminate\Support\Facades\Storage;
 use illuminate\Support\Str;
-use illuminate\Support\Facades\File;
 use Illuminate\Database\QueryException;
 //Class "illuminate\Support\Facades\Validator" not found
 use Validator;
+use File;
 use DB;
 
 class ProductController extends Controller
@@ -30,6 +30,7 @@ class ProductController extends Controller
             }
 
             //kembalikan ke view index dengan compact data products
+            
             return view('product.index', compact('products'));
         } catch (QueryException $e) {
             return redirect()->back()->with('error', $e->errorInfo);
@@ -135,7 +136,7 @@ class ProductController extends Controller
             DB::commit();
 
             //kembalikan ke halaman sebelumnya dengan pesan sukses
-            return redirect()->back()->with('success', 'Product berhasil ditambahkan');
+            return redirect()->route('product')->with('success', 'Product berhasil ditambahkan');
         } catch (QueryException $e) {
             //rollback db transaction
             DB::rollback();
@@ -162,7 +163,7 @@ class ProductController extends Controller
             //ambil data product berdasarkan id
             $product = Product::findOrFail($id);
             //kembalikan ke halaman edit dengan compact data product
-            return view('edit', compact('product'));
+            return view('product.edit', compact('product'));
         } catch (QueryException $e) {
             return redirect()->back()->with('error', $e->errorInfo);
         }
@@ -225,7 +226,7 @@ class ProductController extends Controller
             DB::commit();
 
             //kembalikan ke halaman sebelumnya dengan pesan sukses
-            return redirect()->back()->with('success', 'Product berhasil diupdate');
+            return redirect()->route('product')->with('success', 'Product berhasil diupdate');
         } catch (QueryException $e) {
             //rollback db transaction
             DB::rollback();

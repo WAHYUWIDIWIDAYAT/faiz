@@ -164,4 +164,50 @@ class VoucherController extends Controller
         }
     }
 
+    //checkvoucher if is active and the date is not expired
+    public function checkVoucher(Request $request)
+    {
+        try {
+            //get voucher by name
+            $voucher = Voucher::where('code', $request->voucher)->first();
+
+            //if voucher is not found
+            if (!$voucher) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Voucher tidak ditemukan',
+                ]);
+            }
+
+            //if voucher is found
+            //check if voucher is active
+            if (!$voucher->is_active) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Voucher tidak aktif',
+                ]);
+            }
+
+            //check if voucher is expired
+            if ($voucher->expired_date < now()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Voucher sudah kadaluarsa',
+                ]);
+            }
+
+            //if voucher is active and not expired
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Voucher berhasil digunakan',
+                'data' => $voucher,
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->errorInfo,
+            ]);
+        }
+    }
+
 }
