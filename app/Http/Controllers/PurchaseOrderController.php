@@ -159,16 +159,26 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public function invoice($type)
+    public function invoice($id)
     {
-        $pdf = app('dompdf.wrapper')->loadView('pembelian.invoice');
-        
-            if ($type == 'stream') {
-                return $pdf->stream('invoice.pdf');
-            }
-        
-            if ($type == 'download') {
-                return $pdf->download('invoice.pdf');
-            }
+
+        try{
+            $purchaseOrder = PurchaseOrder::with('purchaseOrderDetail.product', 'customer', 'user')->findOrFail($id);
+
+            $html = view('pembelian.invoice', compact('purchaseOrder'))->render();
+
+            $pdf = PDF::loadHtml($html);
+
+            $pdf->setPaper('a4', 'potrait');
+            //the name of pdf is random
+            $name = 'INV-' . time() . '-' . rand(10000, 99999) . '.pdf';
+
+            return $pdf->download($name);
+            
+
+        }catch(QueryException $e){
+            return redirect()->back()->with('error', $e->errorInfo);
+
+        }
     }
 }

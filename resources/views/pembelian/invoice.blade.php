@@ -71,11 +71,11 @@
         <div class="header">PT. Karya Anak Bangsa</div>
 
         <div class="customer-details">
-            <p>Nama Customer: John Doe</p>
-            <p>Alamat: Jl. ABC No. 123</p>
-            <p>Nomor Telepon: 123-456-789</p>
-            <p>Email: john@example.com</p>
-            <p>Invoice Date: 01-01-2022</p>
+            <p>Nama Customer: {{ $purchaseOrder->customer->name }}</p>
+            <p>Alamat: {{ $purchaseOrder->customer->address }}</p>
+            <p>Nomor Telepon: {{ $purchaseOrder->customer->phone }}</p>
+            <p>Email: {{ $purchaseOrder->customer->email }}</p>
+            <p>Invoice Date: {{ $purchaseOrder->created_at->format('d-m-Y') }}</p>
         </div>
 
         <div class="invoice-details">
@@ -89,24 +89,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Product A</td>
-                        <td>2</td>
-                        <td>Rp. 50,000</td>
-                        <td>Rp. 100,000</td>
-                    </tr>
-                    <tr>
-                        <td>Product B</td>
-                        <td>1</td>
-                        <td>Rp. 75,000</td>
-                        <td>Rp. 75,000</td>
-                    </tr>
+                    @foreach ($purchaseOrder->purchaseOrderDetail as $purchaseOrderDetail)
+                        <tr>
+                            <td>{{ $purchaseOrderDetail->product->name }}</td>
+                            <td>{{ $purchaseOrderDetail->quantity }}</td>
+                            <td>Rp. {{ number_format($purchaseOrderDetail->price) }}</td>
+                            <td>Rp. {{ number_format($purchaseOrderDetail->quantity * $purchaseOrderDetail->price) }}</td>
+                        </tr>
+                    @endforeach
+                    
                 </tbody>
             </table>
         </div>
 
         <div class="total">
-            Total: Rp. 175,000
+            Total: Rp. {{ number_format($purchaseOrder->total) }}
         </div>
 
         <div class="footer">

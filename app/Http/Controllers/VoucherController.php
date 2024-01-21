@@ -188,7 +188,6 @@ class VoucherController extends Controller
                 ]);
             }
 
-            //check if voucher is expired
             if ($voucher->expired_date < now()) {
                 return response()->json([
                     'status' => 'error',
@@ -196,7 +195,6 @@ class VoucherController extends Controller
                 ]);
             }
 
-            //if voucher is active and not expired
             return response()->json([
                 'status' => 'success',
                 'message' => 'Voucher berhasil digunakan',
