@@ -128,6 +128,8 @@ class SalesController extends Controller
         }
     }
 
+    //a
+
     public function getAllSales()
     {
         try {
