@@ -13,6 +13,7 @@ use App\Models\Voucher;
 //exception
 use Illuminate\Database\QueryException;
 use Validator;
+use PDF;
 
 class PurchaseOrderController extends Controller
 {
@@ -158,14 +159,16 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public function invoice($id)
+    public function invoice($type)
     {
-        try {
-            $purchaseOrder = PurchaseOrder::with('purchaseOrderDetail.product', 'customer', 'user')->findOrFail($id);
-
-            return view('pembelian.invoice', compact('purchaseOrder'));
-        } catch (QueryException $e) {
-            return redirect()->back()->with('error', $e->errorInfo);
-        }
+        $pdf = app('dompdf.wrapper')->loadView('pembelian.invoice');
+        
+            if ($type == 'stream') {
+                return $pdf->stream('invoice.pdf');
+            }
+        
+            if ($type == 'download') {
+                return $pdf->download('invoice.pdf');
+            }
     }
 }

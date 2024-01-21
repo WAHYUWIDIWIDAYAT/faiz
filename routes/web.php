@@ -106,7 +106,7 @@ Route::prefix('supervisor')->middleware('is_admin')->group(function(){
     //checkVoucher
     Route::post('/checkVoucher', [VoucherController::class, 'checkVoucher'])->name('checkVoucher');
     //invoice
-    Route::get('/invoice/{id}', [PurchaseOrderController::class, 'invoice'])->name('invoice');
+    Route::get('/invoice/{type}', [PurchaseOrderController::class, 'invoice'])->name('invoice');
 
 
 }); 
